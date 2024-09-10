@@ -11,7 +11,7 @@
     "rxjs": "^7.8.1",
     "tslib": "^2.7.0",
     "tsutils": "^3.0.0",
-    "tsutils-etc": "^1.4.1"
+    "tsutils-etc": "^1.4.2"
   },
   "description": "ESLint rules for RxJS",
   "devDependencies": {
