@@ -8,7 +8,7 @@
     "common-tags": "^1.8.0",
     "decamelize": "^5.0.0",
     "requireindex": "~1.2.0",
-    "rxjs": "^7.0.0",
+    "rxjs": "^7.8.1",
     "tslib": "^2.0.0",
     "tsutils": "^3.0.0",
     "tsutils-etc": "^1.4.1"
@@ -27,7 +27,7 @@
     "chai": "^4.2.0",
     "eslint": "^9.0.0",
     "mocha": "^9.0.0",
-    "rxjs": "^7.0.0",
+    "rxjs": "^7.8.1",
     "ts-node": "^10.0.0",
     "typescript": "~4.7.4",
     "typescript-eslint": "^8.0.0"
