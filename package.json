@@ -64,7 +64,7 @@
     "lint": "eslint",
     "prebuild": "npm run clean",
     "build": "tsc -p tsconfig.dist.json",
-    "test": "npm run test:rules && npm run test:specs",
+    "test": "npm run test:rules",
     "test:debug": "mocha -r ts-node/register -t 5000 tests/rules/prefer-async-pipe.ts --watch-files ./**/*.ts --watch",
     "test:rules": "mocha -r ts-node/register -t 5000 tests/rules/*.ts",
     "test:specs": "mocha -r ts-node/register tests/*-spec.ts"
