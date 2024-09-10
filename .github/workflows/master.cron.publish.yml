@@ -16,12 +16,11 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 20
+      - run: npm install
 
-      - run: npm install -g yarn
-      - run: yarn install
-
-      - run: yarn test
-      - run: yarn dist
+      - run: npm run lint
+      - run: npm test
+      - run: npm run build
 
       - uses: codfish/semantic-release-action@v2
         with:

@@ -27,9 +27,7 @@
     "chai": "^4.2.0",
     "copyfiles": "^2.0.0",
     "eslint": "^9.0.0",
-    "lint-staged": "^13.0.0",
     "mocha": "^9.0.0",
-    "prettier": "^2.0.0",
     "rxjs": "^7.0.0",
     "ts-node": "^10.0.0",
     "typescript": "~4.7.4",
@@ -47,9 +45,6 @@
     "rxjs"
   ],
   "license": "MIT",
-  "lint-staged": {
-    "*.{js,ts}": "prettier --write"
-  },
   "main": "./index.js",
   "name": "eslint-plugin-rxjs-updated",
   "optionalDependencies": {},
@@ -66,16 +61,14 @@
     "url": "https://github.com/fast-facts/eslint-plugin-rxjs.git"
   },
   "scripts": {
-    "predist": "rm -rf dist",
-    "dist": "yarn run lint && yarn run dist:build",
-    "dist:build": "tsc -p tsconfig.dist.json",
-    "postdist": "yarn run copy:files",
-    "copy:files": "copyfiles package.json README.md LICENSE CHANGELOG.md dist",
+    "clean": "rm -rf dist",
     "lint": "eslint",
-    "prettier": "prettier --write \"./{src,tests}/**/*.{js,json,ts,tsx}\"",
-    "prettier:ci": "prettier --check \"./{src,tests}/**/*.{js,json,ts,tsx}\"",
-    "test": "yarn run test:rules && yarn run test:specs",
-    "test:debug": "mocha -r ts-node/register -t 5000 tests/rules/no-explicit-generics.ts --watch-files ./**/*.ts --watch",
+    "prebuild": "npm run clean",
+    "build": "tsc -p tsconfig.dist.json",
+    "postbuild": "npm run copy:files",
+    "copy:files": "copyfiles package.json README.md LICENSE CHANGELOG.md dist",
+    "test": "npm run test:rules && npm run test:specs",
+    "test:debug": "mocha -r ts-node/register -t 5000 tests/rules/prefer-async-pipe.ts --watch-files ./**/*.ts --watch",
     "test:rules": "mocha -r ts-node/register -t 5000 tests/rules/*.ts",
     "test:specs": "mocha -r ts-node/register tests/*-spec.ts"
   },
