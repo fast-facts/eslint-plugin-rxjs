@@ -10,6 +10,9 @@ updates:
     versioning-strategy: increase
     labels:
       - dependencies
+    ignore:
+      - dependency-name: 'decamelize'
+        versions: ['>=6.0.0']
     groups:
       typescript and eslint:
         patterns:
