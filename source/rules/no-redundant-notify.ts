@@ -3,10 +3,7 @@
  * can be found in the LICENSE file at https://github.com/cartant/eslint-plugin-rxjs
  */
 
-import {
-  TSESLint as eslint,
-  TSESTree as es,
-} from "@typescript-eslint/experimental-utils";
+import { TSESLint as eslint, TSESTree as es } from "@typescript-eslint/utils";
 import {
   getParent,
   getTypeServices,
@@ -15,11 +12,16 @@ import {
   isIdentifier,
   isMemberExpression,
   isProgram,
-} from "eslint-etc";
+} from "../etc";
 import { ruleCreator } from "../utils";
 
-const rule = ruleCreator({
-  defaultOptions: [],
+type Options = readonly Record<string, boolean | string>[];
+type MessageIds = "forbidden";
+
+const defaultOptions: Options = [{}];
+
+const rule = ruleCreator<Options, MessageIds>({
+  defaultOptions,
   meta: {
     docs: {
       description:
@@ -36,7 +38,7 @@ const rule = ruleCreator({
   },
   name: "no-redundant-notify",
   create: (context) => {
-    const sourceCode = context.getSourceCode();
+    const sourceCode = context.sourceCode;
     const { couldBeType } = getTypeServices(context);
     return {
       "ExpressionStatement[expression.callee.property.name=/^(complete|error)$/] + ExpressionStatement[expression.callee.property.name=/^(next|complete|error)$/]":

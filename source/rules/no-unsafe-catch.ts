@@ -3,23 +3,25 @@
  * can be found in the LICENSE file at https://github.com/cartant/eslint-plugin-rxjs
  */
 
-import { TSESTree as es } from "@typescript-eslint/experimental-utils";
+import { TSESTree as es } from "@typescript-eslint/utils";
 import { stripIndent } from "common-tags";
+import { defaultObservable } from "../constants";
 import {
   getTypeServices,
   isArrowFunctionExpression,
   isCallExpression,
   isFunctionDeclaration,
   isIdentifier,
-} from "eslint-etc";
-import { defaultObservable } from "../constants";
+} from "../etc";
 import { ruleCreator } from "../utils";
 
 const defaultOptions: readonly {
   observable?: string;
 }[] = [];
 
-const rule = ruleCreator({
+type MessageIds = "forbidden";
+
+const rule = ruleCreator<typeof defaultOptions, MessageIds>({
   defaultOptions,
   meta: {
     docs: {
@@ -45,7 +47,7 @@ const rule = ruleCreator({
     type: "problem",
   },
   name: "no-unsafe-catch",
-  create: (context, unused: typeof defaultOptions) => {
+  create: (context, [unused]) => {
     const invalidOperatorsRegExp = /^(catchError)$/;
 
     const [config = {}] = context.options;

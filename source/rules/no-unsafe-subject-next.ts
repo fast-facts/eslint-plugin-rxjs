@@ -3,19 +3,20 @@
  * can be found in the LICENSE file at https://github.com/cartant/eslint-plugin-rxjs
  */
 
-import { TSESTree as es } from "@typescript-eslint/experimental-utils";
-import {
-  getParserServices,
-  getTypeServices,
-  isMemberExpression,
-} from "eslint-etc";
+import { TSESTree as es } from "@typescript-eslint/utils";
 import * as tsutils from "tsutils";
 import { couldBeType, isReferenceType, isUnionType } from "tsutils-etc";
 import * as ts from "typescript";
+import { getParserServices, getTypeServices, isMemberExpression } from "../etc";
 import { ruleCreator } from "../utils";
 
-const rule = ruleCreator({
-  defaultOptions: [],
+type Options = readonly Record<string, boolean | string>[];
+type MessageIds = "forbidden";
+
+const defaultOptions: Options = [{}];
+
+const rule = ruleCreator<Options, MessageIds>({
+  defaultOptions,
   meta: {
     docs: {
       description: "Forbids unsafe optional `next` calls.",

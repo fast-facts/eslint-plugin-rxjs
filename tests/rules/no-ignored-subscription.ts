@@ -4,8 +4,8 @@
  */
 
 import { stripIndent } from "common-tags";
-import { fromFixture } from "eslint-etc";
-import rule = require("../../source/rules/no-ignored-subscription");
+import { fromFixture } from "../../source/etc";
+import * as rule from "../../source/rules/no-ignored-subscription";
 import { ruleTester } from "../utils";
 
 ruleTester({ types: true }).run("no-ignored-subscription", rule, {

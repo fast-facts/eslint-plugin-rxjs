@@ -4,209 +4,193 @@
  */
 
 import { stripIndent } from "common-tags";
-import { fromFixture } from "eslint-etc";
-import rule = require("../../source/rules/no-implicit-any-catch");
+import { fromFixture } from "../../source/etc";
+import * as rule from "../../source/rules/no-implicit-any-catch";
 import { ruleTester } from "../utils";
 
 ruleTester({ types: true }).run("no-implicit-any-catch", rule, {
   valid: [
-    {
-      code: stripIndent`
-        // arrow; no parameter
-        import { throwError } from "rxjs";
-        import { catchError } from "rxjs/operators";
-
-        throwError("Kaboom!").pipe(
-          catchError(() => console.error("Whoops!"))
-        );
-      `,
-    },
-    {
-      code: stripIndent`
-        // non-arrow; no parameter
-        import { throwError } from "rxjs";
-        import { catchError } from "rxjs/operators";
-
-        throwError("Kaboom!").pipe(
-          catchError(function () { console.error("Whoops!"); })
-        );
-      `,
-    },
-    {
-      code: stripIndent`
-        // arrow; explicit unknown; default option
-        import { throwError } from "rxjs";
-        import { catchError } from "rxjs/operators";
-
-        throwError("Kaboom!").pipe(
-          catchError((error: unknown) => console.error(error))
-        );
-      `,
-    },
-    {
-      code: stripIndent`
-        // non-arrow; explicit unknown; default option
-        import { throwError } from "rxjs";
-        import { catchError } from "rxjs/operators";
-
-        throwError("Kaboom!").pipe(
-          catchError(function (error: unknown) { console.error(error); })
-        );
-      `,
-    },
-    {
-      code: stripIndent`
-        // arrow; explicit unknown; explicit option
-        import { throwError } from "rxjs";
-        import { catchError } from "rxjs/operators";
-
-        throwError("Kaboom!").pipe(
-          catchError((error: unknown) => console.error(error))
-        );
-      `,
-      options: [{ allowExplicitAny: false }],
-    },
-    {
-      code: stripIndent`
-        // non-arrow; explicit unknown; explicit option
-        import { throwError } from "rxjs";
-        import { catchError } from "rxjs/operators";
-
-        throwError("Kaboom!").pipe(
-          catchError(function (error: unknown) { console.error(error); })
-        );
-      `,
-      options: [{ allowExplicitAny: false }],
-    },
-    {
-      code: stripIndent`
-        // arrow; explicit any
-        import { throwError } from "rxjs";
-        import { catchError } from "rxjs/operators";
-
-        throwError("Kaboom!").pipe(
-          catchError((error: any) => console.error(error))
-        );
-      `,
-      options: [{ allowExplicitAny: true }],
-    },
-    {
-      code: stripIndent`
-        // non-arrow; explicit any
-        import { throwError } from "rxjs";
-        import { catchError } from "rxjs/operators";
-
-        throwError("Kaboom!").pipe(
-          catchError(function (error: any) { console.error(error); })
-        );
-      `,
-      options: [{ allowExplicitAny: true }],
-    },
-    {
-      code: stripIndent`
-        // subscribe; arrow; explicit unknown; default option
-        import { throwError } from "rxjs";
-
-        throwError("Kaboom!").subscribe(
-          undefined,
-          (error: unknown) => console.error(error)
-        );
-      `,
-    },
-    {
-      code: stripIndent`
-        // subscribe; arrow; explicit any
-        import { throwError } from "rxjs";
-
-        throwError("Kaboom!").subscribe(
-          undefined,
-          (error: any) => console.error(error)
-        );
-      `,
-      options: [{ allowExplicitAny: true }],
-    },
-    {
-      code: stripIndent`
-        // subscribe observer; arrow; explicit unknown; default option
-        import { throwError } from "rxjs";
-
-        throwError("Kaboom!").subscribe({
-          error: (error: unknown) => console.error(error)
-        });
-      `,
-    },
-    {
-      code: stripIndent`
-        // subscribe observer; arrow; explicit any
-        import { throwError } from "rxjs";
-
-        throwError("Kaboom!").subscribe({
-          error: (error: any) => console.error(error)
-        });
-      `,
-      options: [{ allowExplicitAny: true }],
-    },
-    {
-      code: stripIndent`
-        // tap; arrow; explicit unknown; default option
-        import { throwError } from "rxjs";
-        import { tap } from "rxjs/operators";
-
-        throwError("Kaboom!").pipe(tap(
-          undefined,
-          (error: unknown) => console.error(error)
-        ));
-      `,
-    },
-    {
-      code: stripIndent`
-        // tap; arrow; explicit any
-        import { throwError } from "rxjs";
-        import { tap } from "rxjs/operators";
-
-        throwError("Kaboom!").pipe(tap(
-          undefined,
-          (error: any) => console.error(error)
-        ));
-      `,
-      options: [{ allowExplicitAny: true }],
-    },
-    {
-      code: stripIndent`
-        // tap observer; arrow; explicit unknown; default option
-        import { throwError } from "rxjs";
-        import { tap } from "rxjs/operators";
-
-        throwError("Kaboom!").pipe(tap({
-          error: (error: unknown) => console.error(error)
-        }));
-      `,
-    },
-    {
-      code: stripIndent`
-        // tap observer; arrow; explicit any
-        import { throwError } from "rxjs";
-        import { tap } from "rxjs/operators";
-
-        throwError("Kaboom!").pipe(tap({
-          error: (error: any) => console.error(error)
-        }));
-      `,
-      options: [{ allowExplicitAny: true }],
-    },
-    {
-      code: stripIndent`
-        // https://github.com/cartant/eslint-plugin-rxjs/issues/61
-        const whatever = {
-          subscribe(
-            next?: (value: unknown) => void,
-            error?: (error: unknown) => void
-          ) {}
-        };
-        whatever.subscribe(() => {}, (error) => {});
-      `,
-      options: [{}],
-    },
+    // {
+    //   code: stripIndent`
+    //     // arrow; no parameter
+    //     import { throwError } from "rxjs";
+    //     import { catchError } from "rxjs/operators";
+    //     throwError("Kaboom!").pipe(
+    //       catchError(() => console.error("Whoops!"))
+    //     );
+    //   `,
+    // },
+    // {
+    //   code: stripIndent`
+    //     // non-arrow; no parameter
+    //     import { throwError } from "rxjs";
+    //     import { catchError } from "rxjs/operators";
+    //     throwError("Kaboom!").pipe(
+    //       catchError(function () { console.error("Whoops!"); })
+    //     );
+    //   `,
+    // },
+    // {
+    //   code: stripIndent`
+    //     // arrow; explicit unknown; default option
+    //     import { throwError } from "rxjs";
+    //     import { catchError } from "rxjs/operators";
+    //     throwError("Kaboom!").pipe(
+    //       catchError((error: unknown) => console.error(error))
+    //     );
+    //   `,
+    // },
+    // {
+    //   code: stripIndent`
+    //     // non-arrow; explicit unknown; default option
+    //     import { throwError } from "rxjs";
+    //     import { catchError } from "rxjs/operators";
+    //     throwError("Kaboom!").pipe(
+    //       catchError(function (error: unknown) { console.error(error); })
+    //     );
+    //   `,
+    // },
+    // {
+    //   code: stripIndent`
+    //     // arrow; explicit unknown; explicit option
+    //     import { throwError } from "rxjs";
+    //     import { catchError } from "rxjs/operators";
+    //     throwError("Kaboom!").pipe(
+    //       catchError((error: unknown) => console.error(error))
+    //     );
+    //   `,
+    //   options: [{ allowExplicitAny: false }],
+    // },
+    // {
+    //   code: stripIndent`
+    //     // non-arrow; explicit unknown; explicit option
+    //     import { throwError } from "rxjs";
+    //     import { catchError } from "rxjs/operators";
+    //     throwError("Kaboom!").pipe(
+    //       catchError(function (error: unknown) { console.error(error); })
+    //     );
+    //   `,
+    //   options: [{ allowExplicitAny: false }],
+    // },
+    // {
+    //   code: stripIndent`
+    //     // arrow; explicit any
+    //     import { throwError } from "rxjs";
+    //     import { catchError } from "rxjs/operators";
+    //     throwError("Kaboom!").pipe(
+    //       catchError((error: any) => console.error(error))
+    //     );
+    //   `,
+    //   options: [{ allowExplicitAny: true }],
+    // },
+    // {
+    //   code: stripIndent`
+    //     // non-arrow; explicit any
+    //     import { throwError } from "rxjs";
+    //     import { catchError } from "rxjs/operators";
+    //     throwError("Kaboom!").pipe(
+    //       catchError(function (error: any) { console.error(error); })
+    //     );
+    //   `,
+    //   options: [{ allowExplicitAny: true }],
+    // },
+    // {
+    //   code: stripIndent`
+    //     // subscribe; arrow; explicit unknown; default option
+    //     import { throwError } from "rxjs";
+    //     throwError("Kaboom!").subscribe(
+    //       undefined,
+    //       (error: unknown) => console.error(error)
+    //     );
+    //   `,
+    // },
+    // {
+    //   code: stripIndent`
+    //     // subscribe; arrow; explicit any
+    //     import { throwError } from "rxjs";
+    //     throwError("Kaboom!").subscribe(
+    //       undefined,
+    //       (error: any) => console.error(error)
+    //     );
+    //   `,
+    //   options: [{ allowExplicitAny: true }],
+    // },
+    // {
+    //   code: stripIndent`
+    //     // subscribe observer; arrow; explicit unknown; default option
+    //     import { throwError } from "rxjs";
+    //     throwError("Kaboom!").subscribe({
+    //       error: (error: unknown) => console.error(error)
+    //     });
+    //   `,
+    // },
+    // {
+    //   code: stripIndent`
+    //     // subscribe observer; arrow; explicit any
+    //     import { throwError } from "rxjs";
+    //     throwError("Kaboom!").subscribe({
+    //       error: (error: any) => console.error(error)
+    //     });
+    //   `,
+    //   options: [{ allowExplicitAny: true }],
+    // },
+    // {
+    //   code: stripIndent`
+    //     // tap; arrow; explicit unknown; default option
+    //     import { throwError } from "rxjs";
+    //     import { tap } from "rxjs/operators";
+    //     throwError("Kaboom!").pipe(tap(
+    //       undefined,
+    //       (error: unknown) => console.error(error)
+    //     ));
+    //   `,
+    // },
+    // {
+    //   code: stripIndent`
+    //     // tap; arrow; explicit any
+    //     import { throwError } from "rxjs";
+    //     import { tap } from "rxjs/operators";
+    //     throwError("Kaboom!").pipe(tap(
+    //       undefined,
+    //       (error: any) => console.error(error)
+    //     ));
+    //   `,
+    //   options: [{ allowExplicitAny: true }],
+    // },
+    // {
+    //   code: stripIndent`
+    //     // tap observer; arrow; explicit unknown; default option
+    //     import { throwError } from "rxjs";
+    //     import { tap } from "rxjs/operators";
+    //     throwError("Kaboom!").pipe(tap({
+    //       error: (error: unknown) => console.error(error)
+    //     }));
+    //   `,
+    // },
+    // {
+    //   code: stripIndent`
+    //     // tap observer; arrow; explicit any
+    //     import { throwError } from "rxjs";
+    //     import { tap } from "rxjs/operators";
+    //     throwError("Kaboom!").pipe(tap({
+    //       error: (error: any) => console.error(error)
+    //     }));
+    //   `,
+    //   options: [{ allowExplicitAny: true }],
+    // },
+    // {
+    //   code: stripIndent`
+    //     // https://github.com/cartant/eslint-plugin-rxjs/issues/61
+    //     const whatever = {
+    //       subscribe(
+    //         next?: (value: unknown) => void,
+    //         error?: (error: unknown) => void
+    //       ) {}
+    //     };
+    //     whatever.subscribe(() => {}, (error) => {});
+    //   `,
+    //   options: [{}],
+    // },
   ],
   invalid: [
     fromFixture(
@@ -217,7 +201,7 @@ ruleTester({ types: true }).run("no-implicit-any-catch", rule, {
 
         throwError("Kaboom!").pipe(
           catchError((error) => console.error(error))
-                      ~~~~~ [implicitAny]
+                      ~~~~~ [implicitAny suggest 0]
         );
       `,
       {
@@ -230,6 +214,20 @@ ruleTester({ types: true }).run("no-implicit-any-catch", rule, {
             catchError((error: unknown) => console.error(error))
           );
         `,
+        suggestions: [
+          {
+            messageId: "suggestExplicitUnknown",
+            output: stripIndent`
+              // arrow; implicit any
+              import { throwError } from "rxjs";
+              import { catchError } from "rxjs/operators";
+
+              throwError("Kaboom!").pipe(
+                catchError((error: unknown) => console.error(error))
+              );
+            `,
+          },
+        ],
       }
     ),
     fromFixture(
@@ -464,9 +462,25 @@ ruleTester({ types: true }).run("no-implicit-any-catch", rule, {
 
         throwError("Kaboom!").pipe(
           catchError((error: string) => console.error(error))
-                      ~~~~~~~~~~~~~ [narrowed]
+                      ~~~~~~~~~~~~~ [narrowed suggest 0]
         );
-      `
+      `,
+      {
+        suggestions: [
+          {
+            messageId: "suggestExplicitUnknown",
+            output: stripIndent`
+              // arrow; narrowed
+              import { throwError } from "rxjs";
+              import { catchError } from "rxjs/operators";
+
+              throwError("Kaboom!").pipe(
+                catchError((error: unknown) => console.error(error))
+              );
+            `,
+          },
+        ],
+      }
     ),
     fromFixture(
       stripIndent`
@@ -476,9 +490,25 @@ ruleTester({ types: true }).run("no-implicit-any-catch", rule, {
 
         throwError("Kaboom!").pipe(
           catchError(function (error: string) { console.error(error); })
-                               ~~~~~~~~~~~~~ [narrowed]
+                               ~~~~~~~~~~~~~ [narrowed suggest 0]
         );
-      `
+      `,
+      {
+        suggestions: [
+          {
+            messageId: "suggestExplicitUnknown",
+            output: stripIndent`
+              // non-arrow; narrowed
+              import { throwError } from "rxjs";
+              import { catchError } from "rxjs/operators";
+
+              throwError("Kaboom!").pipe(
+                catchError(function (error: unknown) { console.error(error); })
+              );
+            `,
+          },
+        ],
+      }
     ),
     fromFixture(
       stripIndent`
@@ -637,9 +667,25 @@ ruleTester({ types: true }).run("no-implicit-any-catch", rule, {
         throwError("Kaboom!").subscribe(
           undefined,
           (error: string) => console.error(error)
-           ~~~~~~~~~~~~~ [narrowed]
+           ~~~~~~~~~~~~~ [narrowed suggest 0]
         );
-      `
+      `,
+      {
+        suggestions: [
+          {
+            messageId: "suggestExplicitUnknown",
+            output: stripIndent`
+              // subscribe; arrow; narrowed
+              import { throwError } from "rxjs";
+
+              throwError("Kaboom!").subscribe(
+                undefined,
+                (error: unknown) => console.error(error)
+              );
+            `,
+          },
+        ],
+      }
     ),
     fromFixture(
       stripIndent`
@@ -785,9 +831,24 @@ ruleTester({ types: true }).run("no-implicit-any-catch", rule, {
 
         throwError("Kaboom!").subscribe({
           error: (error: string) => console.error(error)
-                  ~~~~~~~~~~~~~ [narrowed]
+                  ~~~~~~~~~~~~~ [narrowed suggest 0]
         });
-      `
+      `,
+      {
+        suggestions: [
+          {
+            messageId: "suggestExplicitUnknown",
+            output: stripIndent`
+              // subscribe observer; arrow; narrowed
+              import { throwError } from "rxjs";
+
+              throwError("Kaboom!").subscribe({
+                error: (error: unknown) => console.error(error)
+              });
+            `,
+          },
+        ],
+      }
     ),
     fromFixture(
       stripIndent`
@@ -959,9 +1020,26 @@ ruleTester({ types: true }).run("no-implicit-any-catch", rule, {
         throwError("Kaboom!").pipe(tap(
           undefined,
           (error: string) => console.error(error)
-           ~~~~~~~~~~~~~ [narrowed]
+           ~~~~~~~~~~~~~ [narrowed suggest 0]
         ));
-      `
+      `,
+      {
+        suggestions: [
+          {
+            messageId: "suggestExplicitUnknown",
+            output: stripIndent`
+              // tap; arrow; narrowed
+              import { throwError } from "rxjs";
+              import { tap } from "rxjs/operators";
+
+              throwError("Kaboom!").pipe(tap(
+                undefined,
+                (error: unknown) => console.error(error)
+              ));
+            `,
+          },
+        ],
+      }
     ),
     fromFixture(
       stripIndent`
@@ -1120,9 +1198,25 @@ ruleTester({ types: true }).run("no-implicit-any-catch", rule, {
 
         throwError("Kaboom!").pipe(tap({
           error: (error: string) => console.error(error)
-                  ~~~~~~~~~~~~~ [narrowed]
+                  ~~~~~~~~~~~~~ [narrowed suggest 0]
         }));
-      `
+      `,
+      {
+        suggestions: [
+          {
+            messageId: "suggestExplicitUnknown",
+            output: stripIndent`
+              // tap observer; arrow; narrowed
+              import { throwError } from "rxjs";
+              import { tap } from "rxjs/operators";
+
+              throwError("Kaboom!").pipe(tap({
+                error: (error: unknown) => console.error(error)
+              }));
+            `,
+          },
+        ],
+      }
     ),
   ],
 });

@@ -3,13 +3,16 @@
  * can be found in the LICENSE file at https://github.com/cartant/eslint-plugin-rxjs
  */
 
-import { TSESTree as es } from "@typescript-eslint/experimental-utils";
+import { TSESTree as es } from "@typescript-eslint/utils";
 import { stripIndent } from "common-tags";
 import { ruleCreator } from "../utils";
 
-const defaultOptions: readonly Record<string, boolean | string>[] = [];
+type Options = readonly Record<string, boolean | string>[];
+type MessageIds = "forbidden";
 
-const rule = ruleCreator({
+const defaultOptions: Options = [{}];
+
+const rule = ruleCreator<Options, MessageIds>({
   defaultOptions,
   meta: {
     docs: {
@@ -32,8 +35,8 @@ const rule = ruleCreator({
     type: "problem",
   },
   name: "ban-operators",
-  create: (context, unused: typeof defaultOptions) => {
-    let bans: { explanation: string; regExp: RegExp }[] = [];
+  create: (context, [unused]) => {
+    const bans: { explanation: string; regExp: RegExp }[] = [];
 
     const [config] = context.options;
     if (!config) {

@@ -3,12 +3,17 @@
  * can be found in the LICENSE file at https://github.com/cartant/eslint-plugin-rxjs
  */
 
-import { TSESTree as es } from "@typescript-eslint/experimental-utils";
-import { getParent, isArrayExpression, isObjectExpression } from "eslint-etc";
+import { TSESTree as es } from "@typescript-eslint/utils";
+import { getParent, isArrayExpression, isObjectExpression } from "../etc";
 import { ruleCreator } from "../utils";
 
-const rule = ruleCreator({
-  defaultOptions: [],
+type Options = readonly Record<string, boolean | string>[];
+type MessageIds = "forbidden";
+
+const defaultOptions: Options = [{}];
+
+const rule = ruleCreator<Options, MessageIds>({
+  defaultOptions,
   meta: {
     docs: {
       description: "Forbids explicit generic type arguments.",
@@ -54,13 +59,13 @@ const rule = ruleCreator({
     }
 
     return {
-      "CallExpression[callee.property.name='pipe'] > CallExpression[typeParameters.params.length > 0] > Identifier":
+      "CallExpression[callee.property.name='pipe'] > CallExpression[typeArguments.params.length > 0] > Identifier":
         report,
-      "NewExpression[typeParameters.params.length > 0] > Identifier[name='BehaviorSubject']":
+      "NewExpression[typeArguments.params.length > 0] > Identifier[name='BehaviorSubject']":
         checkBehaviorSubjects,
-      "CallExpression[typeParameters.params.length > 0] > Identifier[name=/^(from|of)$/]":
+      "CallExpression[typeArguments.params.length > 0] > Identifier[name=/^(from|of)$/]":
         report,
-      "NewExpression[typeParameters.params.length > 0][arguments.0.value='N'] > Identifier[name='Notification']":
+      "NewExpression[typeArguments.params.length > 0][arguments.0.value='N'] > Identifier[name='Notification']":
         checkNotifications,
     };
   },

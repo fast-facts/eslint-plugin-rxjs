@@ -1,3 +1,12 @@
+
+This repo is solely meant to updated cartant's [eslint-plugin-rxjs](https://github.com/cartant/eslint-plugin-rxjs) package to be compatible with eslint v9.
+
+PRs will not be accepted for new features or bug fixes. Reach out to the original maintainer.
+
+```
+npm install eslint-plugin-rxjs-updated
+```
+
 # eslint-plugin-rxjs
 
 [![GitHub License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/cartant/eslint-plugin-rxjs/blob/master/LICENSE)

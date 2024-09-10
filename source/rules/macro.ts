@@ -3,14 +3,16 @@
  * can be found in the LICENSE file at https://github.com/cartant/eslint-plugin-rxjs
  */
 
-import {
-  TSESLint as eslint,
-  TSESTree as es,
-} from "@typescript-eslint/experimental-utils";
+import { TSESLint as eslint, TSESTree as es } from "@typescript-eslint/utils";
 import { ruleCreator } from "../utils";
 
-const rule = ruleCreator({
-  defaultOptions: [],
+type Options = readonly Record<string, boolean | string>[];
+type MessageIds = "macro";
+
+const defaultOptions: Options = [{}];
+
+const rule = ruleCreator<Options, MessageIds>({
+  defaultOptions,
   meta: {
     docs: {
       description: "Enforces the use of the RxJS Tools Babel macro.",

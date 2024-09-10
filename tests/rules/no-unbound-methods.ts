@@ -3,14 +3,16 @@
  * can be found in the LICENSE file at https://github.com/cartant/eslint-plugin-rxjs
  */
 
-import { TSESLint as eslint } from "@typescript-eslint/experimental-utils";
+import { TSESLint as eslint } from "@typescript-eslint/utils";
 import { stripIndent } from "common-tags";
-import { fromFixture } from "eslint-etc";
-import rule = require("../../source/rules/no-unbound-methods");
+import { fromFixture } from "../../source/etc";
+import * as rule from "../../source/rules/no-unbound-methods";
 import { ruleTester } from "../utils";
 
 interface Tests {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   valid: (string | eslint.ValidTestCase<any>)[];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   invalid: eslint.InvalidTestCase<any, any>[];
 }
 

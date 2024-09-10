@@ -3,7 +3,7 @@
  * can be found in the LICENSE file at https://github.com/cartant/eslint-plugin-rxjs
  */
 
-import { TSESTree as es } from "@typescript-eslint/experimental-utils";
+import { TSESTree as es } from "@typescript-eslint/utils";
 import { stripIndent } from "common-tags";
 import {
   getParent,
@@ -11,7 +11,7 @@ import {
   isCallExpression,
   isIdentifier,
   isMemberExpression,
-} from "eslint-etc";
+} from "../etc";
 import { ruleCreator } from "../utils";
 
 const defaultOptions: readonly {
@@ -19,7 +19,9 @@ const defaultOptions: readonly {
   allow?: string[];
 }[] = [];
 
-const rule = ruleCreator({
+type MessageIds = "forbidden";
+
+const rule = ruleCreator<typeof defaultOptions, MessageIds>({
   defaultOptions,
   meta: {
     docs: {
@@ -47,7 +49,7 @@ const rule = ruleCreator({
     type: "problem",
   },
   name: "no-unsafe-takeuntil",
-  create: (context, unused: typeof defaultOptions) => {
+  create: (context, [unused]) => {
     let checkedOperatorsRegExp = /^takeUntil$/;
     const allowedOperators = [
       "count",

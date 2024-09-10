@@ -3,14 +3,15 @@
  * can be found in the LICENSE file at https://github.com/cartant/eslint-plugin-rxjs
  */
 
-import { TSESTree as es } from "@typescript-eslint/experimental-utils";
+import { TSESTree as es } from "@typescript-eslint/utils";
 import { stripIndent } from "common-tags";
-import { getTypeServices, isCallExpression, isIdentifier } from "eslint-etc";
 import ts from "typescript";
 import { defaultObservable } from "../constants";
+import { getTypeServices, isCallExpression, isIdentifier } from "../etc";
 import { ruleCreator } from "../utils";
 
 function isTypeReference(type: ts.Type): type is ts.TypeReference {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return Boolean((type as any).target);
 }
 
@@ -18,8 +19,10 @@ const defaultOptions: readonly {
   observable?: string;
 }[] = [];
 
-const rule = ruleCreator({
-  defaultOptions: [],
+type MessageIds = "forbidden";
+
+const rule = ruleCreator<typeof defaultOptions, MessageIds>({
+  defaultOptions,
   meta: {
     docs: {
       description: "Forbids effects and epics that re-emit filtered actions.",
@@ -45,7 +48,7 @@ const rule = ruleCreator({
     type: "problem",
   },
   name: "no-cyclic-action",
-  create: (context, unused: typeof defaultOptions) => {
+  create: (context, [unused]) => {
     const [config = {}] = context.options;
     const { observable = defaultObservable } = config;
     const observableRegExp = new RegExp(observable);

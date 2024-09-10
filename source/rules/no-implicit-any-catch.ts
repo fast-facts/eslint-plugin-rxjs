@@ -7,7 +7,7 @@ import {
   AST_NODE_TYPES,
   TSESLint as eslint,
   TSESTree as es,
-} from "@typescript-eslint/experimental-utils";
+} from "@typescript-eslint/utils";
 import {
   getTypeServices,
   hasTypeAnnotation,
@@ -17,7 +17,7 @@ import {
   isMemberExpression,
   isObjectExpression,
   isProperty,
-} from "eslint-etc";
+} from "../etc";
 import { ruleCreator } from "../utils";
 
 function isParenthesised(
@@ -40,7 +40,13 @@ const defaultOptions: readonly {
   allowExplicitAny?: boolean;
 }[] = [];
 
-const rule = ruleCreator({
+type MessageIds =
+  | "explicitAny"
+  | "implicitAny"
+  | "narrowed"
+  | "suggestExplicitUnknown";
+
+const rule = ruleCreator<typeof defaultOptions, MessageIds>({
   defaultOptions,
   meta: {
     docs: {
@@ -72,11 +78,11 @@ const rule = ruleCreator({
     type: "suggestion",
   },
   name: "no-implicit-any-catch",
-  create: (context, unused: typeof defaultOptions) => {
+  create: (context, [unused]) => {
     const [config = {}] = context.options;
     const { allowExplicitAny = false } = config;
     const { couldBeObservable } = getTypeServices(context);
-    const sourceCode = context.getSourceCode();
+    const sourceCode = context.sourceCode;
 
     function checkCallback(callback: es.Node) {
       if (

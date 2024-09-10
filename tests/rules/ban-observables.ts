@@ -4,8 +4,8 @@
  */
 
 import { stripIndent } from "common-tags";
-import { fromFixture } from "eslint-etc";
-import rule = require("../../source/rules/ban-observables");
+import { fromFixture } from "../../source/etc";
+import * as rule from "../../source/rules/ban-observables";
 import { ruleTester } from "../utils";
 
 ruleTester({ types: false }).run("ban-observables", rule, {

@@ -3,23 +3,22 @@
  * can be found in the LICENSE file at https://github.com/cartant/eslint-plugin-rxjs
  */
 
-import {
-  TSESTree as es,
-  TSESLint as eslint,
-} from "@typescript-eslint/experimental-utils";
+import { TSESTree as es, TSESLint as eslint } from "@typescript-eslint/utils";
 import {
   getTypeServices,
   isArrowFunctionExpression,
   isFunctionExpression,
   isMemberExpression,
-} from "eslint-etc";
+} from "../etc";
 import { ruleCreator } from "../utils";
 
 const defaultOptions: readonly {
   allowNext?: boolean;
 }[] = [];
 
-const rule = ruleCreator({
+type MessageIds = "forbidden";
+
+const rule = ruleCreator<typeof defaultOptions, MessageIds>({
   defaultOptions,
   meta: {
     docs: {
@@ -44,7 +43,7 @@ const rule = ruleCreator({
     type: "problem",
   },
   name: "prefer-observer",
-  create: (context, unused: typeof defaultOptions) => {
+  create: (context, [unused]) => {
     const { couldBeFunction, couldBeObservable } = getTypeServices(context);
     const [config = {}] = context.options;
     const { allowNext = true } = config;
@@ -56,7 +55,7 @@ const rule = ruleCreator({
       }
 
       function* fix(fixer: eslint.RuleFixer) {
-        const sourceCode = context.getSourceCode();
+        const sourceCode = context.sourceCode;
         const [nextArg, errorArg, completeArg] = args;
         const nextArgText = nextArg ? sourceCode.getText(nextArg) : "";
         const errorArgText = errorArg ? sourceCode.getText(errorArg) : "";

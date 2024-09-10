@@ -4,8 +4,8 @@
  */
 
 import { stripIndent } from "common-tags";
-import { fromFixture } from "eslint-etc";
-import rule = require("../../source/rules/no-ignored-notifier");
+import { fromFixture } from "../../source/etc";
+import * as rule from "../../source/rules/no-ignored-notifier";
 import { ruleTester } from "../utils";
 
 ruleTester({ types: true }).run("no-ignored-notifier", rule, {

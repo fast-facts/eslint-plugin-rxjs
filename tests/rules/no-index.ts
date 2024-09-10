@@ -4,8 +4,8 @@
  */
 
 import { stripIndent } from "common-tags";
-import { fromFixture } from "eslint-etc";
-import rule = require("../../source/rules/no-index");
+import { fromFixture } from "../../source/etc";
+import * as rule from "../../source/rules/no-index";
 import { ruleTester } from "../utils";
 
 ruleTester({ types: false }).run("no-index", rule, {

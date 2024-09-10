@@ -4,8 +4,8 @@
  */
 
 import { stripIndent } from "common-tags";
-import { fromFixture } from "eslint-etc";
-import rule = require("../../source/rules/no-redundant-notify");
+import { fromFixture } from "../../source/etc";
+import * as rule from "../../source/rules/no-redundant-notify";
 import { ruleTester } from "../utils";
 
 ruleTester({ types: true }).run("no-redundant-notify", rule, {

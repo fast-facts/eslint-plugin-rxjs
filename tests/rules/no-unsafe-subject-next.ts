@@ -4,8 +4,8 @@
  */
 
 import { stripIndent } from "common-tags";
-import { fromFixture } from "eslint-etc";
-import rule = require("../../source/rules/no-unsafe-subject-next");
+import { fromFixture } from "../../source/etc";
+import * as rule from "../../source/rules/no-unsafe-subject-next";
 import { ruleTester } from "../utils";
 
 ruleTester({ types: true }).run("no-unsafe-subject-next", rule, {

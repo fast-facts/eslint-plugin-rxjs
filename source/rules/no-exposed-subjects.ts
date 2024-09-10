@@ -3,8 +3,8 @@
  * can be found in the LICENSE file at https://github.com/cartant/eslint-plugin-rxjs
  */
 
-import { TSESTree as es } from "@typescript-eslint/experimental-utils";
-import { getTypeServices, isIdentifier } from "eslint-etc";
+import { TSESTree as es } from "@typescript-eslint/utils";
+import { getTypeServices, isIdentifier } from "../etc";
 import { ruleCreator } from "../utils";
 
 const defaultAllowedTypesRegExp = /^EventEmitter$/;
@@ -12,7 +12,9 @@ const defaultOptions: readonly {
   allowProtected?: boolean;
 }[] = [];
 
-const rule = ruleCreator({
+type MessageIds = "forbidden" | "forbiddenAllowProtected";
+
+const rule = ruleCreator<typeof defaultOptions, MessageIds>({
   defaultOptions,
   meta: {
     docs: {
@@ -37,7 +39,7 @@ const rule = ruleCreator({
     type: "problem",
   },
   name: "no-exposed-subjects",
-  create: (context, unused: typeof defaultOptions) => {
+  create: (context, [unused]) => {
     const [config = {}] = context.options;
     const { allowProtected = false } = config;
     const { couldBeSubject, couldBeType } = getTypeServices(context);
@@ -104,6 +106,7 @@ const rule = ruleCreator({
         },
       [`MethodDefinition[accessibility!=${accessibilityRexExp}][kind='method']`]:
         (node: es.MethodDefinition) => {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           const functionExpression = node.value as any;
           const returnType = functionExpression.returnType;
           if (!returnType) {

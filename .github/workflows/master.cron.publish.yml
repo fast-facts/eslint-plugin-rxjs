@@ -1,0 +1,42 @@
+name: Publish
+
+on:
+  schedule:
+    - cron: '0 9 * * *'
+  workflow_dispatch:
+    branches:
+      - master
+
+jobs:
+  run:
+    name: Publish
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
+      - run: npm install -g yarn
+      - run: yarn install
+
+      - run: yarn test
+      - run: yarn dist
+
+      - uses: codfish/semantic-release-action@v2
+        with:
+          plugins: |
+            [
+              "@semantic-release/commit-analyzer",
+              "@semantic-release/release-notes-generator",
+              [
+                "@semantic-release/npm", {
+                  "pkgRoot": "dist"
+                }
+              ],
+              "@semantic-release/github"
+            ]
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+        continue-on-error: true

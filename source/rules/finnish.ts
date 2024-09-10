@@ -3,14 +3,14 @@
  * can be found in the LICENSE file at https://github.com/cartant/eslint-plugin-rxjs
  */
 
-import { TSESTree as es } from "@typescript-eslint/experimental-utils";
+import { TSESTree as es } from "@typescript-eslint/utils";
 import {
   findParent,
   getLoc,
   getParent,
   getParserServices,
   getTypeServices,
-} from "eslint-etc";
+} from "../etc";
 import { ruleCreator } from "../utils";
 
 const defaultOptions: readonly {
@@ -24,7 +24,9 @@ const defaultOptions: readonly {
   variables?: boolean;
 }[] = [];
 
-const rule = ruleCreator({
+type MessageIds = "shouldBeFinnish" | "shouldNotBeFinnish";
+
+const rule = ruleCreator<typeof defaultOptions, MessageIds>({
   defaultOptions,
   meta: {
     docs: {
@@ -55,7 +57,7 @@ const rule = ruleCreator({
     type: "problem",
   },
   name: "finnish",
-  create: (context, unused: typeof defaultOptions) => {
+  create: (context, [unused]) => {
     const { esTreeNodeToTSNodeMap } = getParserServices(context);
     const {
       couldBeObservable,
@@ -105,7 +107,7 @@ const rule = ruleCreator({
     }
 
     function checkNode(nameNode: es.Node, typeNode?: es.Node) {
-      let tsNode = esTreeNodeToTSNodeMap.get(nameNode);
+      const tsNode = esTreeNodeToTSNodeMap.get(nameNode);
       const text = tsNode.getText();
       const hasFinnish = /\$$/.test(text);
       if (hasFinnish && !strict) {

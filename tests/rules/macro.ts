@@ -4,8 +4,8 @@
  */
 
 import { stripIndent } from "common-tags";
-import { fromFixture } from "eslint-etc";
-import rule = require("../../source/rules/macro");
+import { fromFixture } from "../../source/etc";
+import * as rule from "../../source/rules/macro";
 import { ruleTester } from "../utils";
 
 ruleTester({ types: true }).run("macro", rule, {

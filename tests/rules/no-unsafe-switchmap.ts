@@ -4,8 +4,8 @@
  */
 
 import { stripIndent } from "common-tags";
-import { fromFixture } from "eslint-etc";
-import rule = require("../../source/rules/no-unsafe-switchmap");
+import { fromFixture } from "../../source/etc";
+import * as rule from "../../source/rules/no-unsafe-switchmap";
 import { ruleTester } from "../utils";
 
 const setup = stripIndent`

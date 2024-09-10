@@ -1,12 +1,14 @@
 {
   "compilerOptions": {
     "baseUrl": ".",
-    "declaration": false,
+    "declaration": true,
     "esModuleInterop": true,
     "importHelpers": true,
-    "lib": ["esnext"],
-    "module": "commonjs",
-    "moduleResolution": "node",
+    "lib": [
+      "esnext"
+    ],
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
     "noEmitHelpers": true,
     "outDir": "build",
     "paths": {},
@@ -19,6 +21,7 @@
   "exclude": [],
   "include": [
     "source/**/*.ts",
-    "tests/**/*.ts"
+    "tests/**/*.ts",
+    "eslint.config.mjs"
   ]
 }

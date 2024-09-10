@@ -3,14 +3,14 @@
  * can be found in the LICENSE file at https://github.com/cartant/eslint-plugin-rxjs
  */
 
-import { TSESTree as es } from "@typescript-eslint/experimental-utils";
+import { TSESTree as es } from "@typescript-eslint/utils";
 import {
   findParent,
   getLoc,
   getParent,
   getParserServices,
   getTypeServices,
-} from "eslint-etc";
+} from "../etc";
 import { escapeRegExp, ruleCreator } from "../utils";
 
 const defaultOptions: readonly {
@@ -21,7 +21,9 @@ const defaultOptions: readonly {
   variables?: boolean;
 }[] = [];
 
-const rule = ruleCreator({
+type MessageIds = "forbidden";
+
+const rule = ruleCreator<typeof defaultOptions, MessageIds>({
   defaultOptions,
   meta: {
     docs: {
@@ -48,7 +50,7 @@ const rule = ruleCreator({
     type: "problem",
   },
   name: "suffix-subjects",
-  create: (context, unused: typeof defaultOptions) => {
+  create: (context, [unused]) => {
     const { esTreeNodeToTSNodeMap } = getParserServices(context);
     const { couldBeType } = getTypeServices(context);
     const [config = {}] = context.options;
@@ -81,7 +83,7 @@ const rule = ruleCreator({
     );
 
     function checkNode(nameNode: es.Node, typeNode?: es.Node) {
-      let tsNode = esTreeNodeToTSNodeMap.get(nameNode);
+      const tsNode = esTreeNodeToTSNodeMap.get(nameNode);
       const text = tsNode.getText();
       if (
         !suffixRegex.test(text) &&
@@ -130,6 +132,7 @@ const rule = ruleCreator({
         }
       },
       "PropertyDefinition[computed=false]": (node: es.PropertyDefinition) => {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const anyNode = node as any;
         if (validate.properties) {
           checkNode(anyNode.key);
@@ -218,6 +221,7 @@ const rule = ruleCreator({
         }
       },
       "TSPropertySignature[computed=false]": (node: es.Node) => {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const anyNode = node as any;
         if (validate.properties) {
           checkNode(anyNode.key);

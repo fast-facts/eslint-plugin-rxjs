@@ -3,11 +3,16 @@
  * can be found in the LICENSE file at https://github.com/cartant/eslint-plugin-rxjs
  */
 
-import { TSESTree as es } from "@typescript-eslint/experimental-utils";
+import { TSESTree as es } from "@typescript-eslint/utils";
 import { ruleCreator } from "../utils";
 
-const rule = ruleCreator({
-  defaultOptions: [],
+type Options = readonly Record<string, boolean | string>[];
+type MessageIds = "forbidden";
+
+const defaultOptions: Options = [{}];
+
+const rule = ruleCreator<Options, MessageIds>({
+  defaultOptions,
   meta: {
     docs: {
       description: "Enforces the use of a `just` alias for `of`.",
@@ -40,7 +45,7 @@ const rule = ruleCreator({
             fix: (fixer) => fixer.replaceTextRange(node.range, "of as just"),
           });
 
-          const [ofImport] = context.getDeclaredVariables(node);
+          const [ofImport] = context.sourceCode.getDeclaredVariables(node);
           ofImport.references.forEach((ref) => {
             context.report({
               messageId: "forbidden",

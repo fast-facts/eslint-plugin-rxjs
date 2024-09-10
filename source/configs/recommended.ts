@@ -4,7 +4,7 @@
  */
 
 export = {
-  plugins: ["rxjs"],
+  name: "rxjs/recommended",
   rules: {
     "rxjs/no-async-subscribe": "error",
     "rxjs/no-create": "error",

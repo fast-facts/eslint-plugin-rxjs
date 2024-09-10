@@ -1,0 +1,25 @@
+name: Build on Master PR
+
+on:
+  pull_request:
+    branches:
+      - master
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.base_ref }}
+
+jobs:
+  run:
+    name: Build on Master PR
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
+      - run: npm install -g yarn
+      - run: yarn install
+
+      - run: yarn test
+      - run: yarn dist

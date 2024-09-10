@@ -4,8 +4,8 @@
  */
 
 import { stripIndent } from "common-tags";
-import { fromFixture } from "eslint-etc";
-import rule = require("../../source/rules/no-subject-unsubscribe");
+import { fromFixture } from "../../source/etc";
+import * as rule from "../../source/rules/no-subject-unsubscribe";
 import { ruleTester } from "../utils";
 
 ruleTester({ types: true }).run("no-subject-unsubscribe", rule, {
