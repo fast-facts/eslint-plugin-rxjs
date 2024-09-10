@@ -9,7 +9,7 @@
     "decamelize": "^5.0.0",
     "requireindex": "~1.2.0",
     "rxjs": "^7.0.0",
-    "tslib": "^2.0.0",
+    "tslib": "^2.7.0",
     "tsutils": "^3.0.0",
     "tsutils-etc": "^1.4.1"
   },
