@@ -15,8 +15,6 @@
   },
   "description": "ESLint rules for RxJS",
   "devDependencies": {
-    "@eslint/eslintrc": "^3.1.0",
-    "@eslint/js": "^9.10.0",
     "@types/chai": "^4.3.19",
     "@types/common-tags": "^1.8.4",
     "@types/eslint": "^9.6.1",
