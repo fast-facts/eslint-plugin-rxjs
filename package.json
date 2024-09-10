@@ -25,7 +25,6 @@
     "@typescript-eslint/parser": "^8.0.0",
     "@typescript-eslint/rule-tester": "^8.0.0",
     "chai": "^4.2.0",
-    "copyfiles": "^2.0.0",
     "eslint": "^9.0.0",
     "mocha": "^9.0.0",
     "rxjs": "^7.0.0",
@@ -45,7 +44,7 @@
     "rxjs"
   ],
   "license": "MIT",
-  "main": "./index.js",
+  "main": "./dist/index.js",
   "name": "eslint-plugin-rxjs-updated",
   "optionalDependencies": {},
   "peerDependencies": {
@@ -65,8 +64,6 @@
     "lint": "eslint",
     "prebuild": "npm run clean",
     "build": "tsc -p tsconfig.dist.json",
-    "postbuild": "npm run copy:files",
-    "copy:files": "copyfiles package.json README.md LICENSE CHANGELOG.md dist",
     "test": "npm run test:rules && npm run test:specs",
     "test:debug": "mocha -r ts-node/register -t 5000 tests/rules/prefer-async-pipe.ts --watch-files ./**/*.ts --watch",
     "test:rules": "mocha -r ts-node/register -t 5000 tests/rules/*.ts",
