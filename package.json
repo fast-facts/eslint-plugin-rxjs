@@ -4,6 +4,7 @@
     "url": "https://github.com/cartant/eslint-plugin-rxjs/issues"
   },
   "dependencies": {
+    "@typescript-eslint/rule-tester": "^8.5.0",
     "@typescript-eslint/utils": "^8.5.0",
     "common-tags": "^1.8.2",
     "decamelize": "^5.0.1",
@@ -23,7 +24,6 @@
     "@types/mocha": "^10.0.7",
     "@types/node": "^22.5.4",
     "@typescript-eslint/parser": "^8.5.0",
-    "@typescript-eslint/rule-tester": "^8.5.0",
     "chai": "^5.1.1",
     "eslint": "^9.10.0",
     "mocha": "^10.7.3",
