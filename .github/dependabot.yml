@@ -22,9 +22,12 @@ updates:
         patterns:
           - '*typescript*'
           - '*eslint*'
-      karma:
+      chai:
         patterns:
-          - '*karma*'
+          - '*chai*'
+      mocha:
+        patterns:
+          - '*mocha*'
       types:
         patterns:
           - '@types/*'
