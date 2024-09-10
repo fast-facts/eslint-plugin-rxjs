@@ -5,7 +5,7 @@
 
 import { TSESLint as eslint } from "@typescript-eslint/utils";
 import { stripIndent } from "common-tags";
-import { fromFixture } from "../../source/etc";
+import { fromFixture } from "../../source/etc/from-fixture";
 import * as rule from "../../source/rules/no-unbound-methods";
 import { ruleTester } from "../utils";
 

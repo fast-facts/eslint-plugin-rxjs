@@ -4,7 +4,7 @@
  */
 
 import { stripIndent } from "common-tags";
-import { fromFixture } from "../../source/etc";
+import { fromFixture } from "../../source/etc/from-fixture";
 import * as rule from "../../source/rules/no-redundant-notify";
 import { ruleTester } from "../utils";
 

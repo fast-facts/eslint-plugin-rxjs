@@ -4,7 +4,7 @@
  */
 
 import { stripIndent } from "common-tags";
-import { fromFixture } from "../../source/etc";
+import { fromFixture } from "../../source/etc/from-fixture";
 import * as rule from "../../source/rules/no-ignored-subscription";
 import { ruleTester } from "../utils";
 
