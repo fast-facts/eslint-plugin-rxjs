@@ -1,0 +1,30 @@
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: '/'
+    schedule:
+      interval: 'daily'
+      time: '03:00'
+      timezone: 'America/New_York'
+    open-pull-requests-limit: 10
+    versioning-strategy: increase
+    labels:
+      - dependencies
+    ignore:
+      - dependency-name: 'decamelize'
+        versions: ['>=6.0.0']
+    commit-message:
+      prefix: fix
+      prefix-development: chore
+      include: scope
+    groups:
+      typescript and eslint:
+        patterns:
+          - '*typescript*'
+          - '*eslint*'
+      karma:
+        patterns:
+          - '*karma*'
+      types:
+        patterns:
+          - '@types/*'
