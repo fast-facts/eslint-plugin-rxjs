@@ -18,7 +18,7 @@
     "@types/chai": "^4.3.19",
     "@types/common-tags": "^1.8.4",
     "@types/eslint": "^9.6.1",
-    "@types/mocha": "^10.0.7",
+    "@types/mocha": "^10.0.8",
     "@types/node": "^22.5.4",
     "@typescript-eslint/parser": "^8.5.0",
     "@typescript-eslint/rule-tester": "^8.5.0",
