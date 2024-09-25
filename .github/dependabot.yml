@@ -11,6 +11,8 @@ updates:
     labels:
       - dependencies
     ignore:
+      - dependency-name: '@types/chai'
+        versions: ['>=5.0.0']
       - dependency-name: 'decamelize'
         versions: ['>=6.0.0']
     commit-message:
