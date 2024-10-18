@@ -70,12 +70,14 @@ const rule = ruleCreator<Options, MessageIds>({
       [String.raw`ImportDeclaration[source.value=/^rxjs\u002foperators$/] > ImportSpecifier`]:
         (node: es.ImportSpecifier) => {
           const identifier = node.imported;
-          const failure = getFailure(identifier.name);
-          if (failure) {
-            context.report({
-              ...failure,
-              node: identifier,
-            });
+          if ('name' in identifier) {
+            const failure = getFailure(identifier.name);
+            if (failure) {
+              context.report({
+                ...failure,
+                node: identifier,
+              });
+            }
           }
         },
     };
