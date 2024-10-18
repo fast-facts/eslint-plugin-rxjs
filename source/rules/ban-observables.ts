@@ -71,12 +71,14 @@ const rule = ruleCreator<Options, MessageIds>({
         node: es.ImportSpecifier
       ) => {
         const identifier = node.imported;
-        const failure = getFailure(identifier.name);
-        if (failure) {
-          context.report({
-            ...failure,
-            node: identifier,
-          });
+        if ('name' in identifier) {
+          const failure = getFailure(identifier.name);
+          if (failure) {
+            context.report({
+              ...failure,
+              node: identifier,
+            });
+          }
         }
       },
     };
