@@ -87,11 +87,11 @@ const rule = ruleCreator<typeof defaultOptions, MessageIds>({
       const text = tsNode.getText();
       if (
         !suffixRegex.test(text) &&
-        couldBeType(typeNode || nameNode, "Subject")
+        couldBeType(typeNode ?? nameNode, "Subject")
       ) {
         for (const type of types) {
           const { regExp, validate } = type;
-          if (couldBeType(typeNode || nameNode, regExp) && !validate) {
+          if (couldBeType(typeNode ?? nameNode, regExp) && !validate) {
             return;
           }
         }
