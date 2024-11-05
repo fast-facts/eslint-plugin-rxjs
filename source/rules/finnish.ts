@@ -116,20 +116,20 @@ const rule = ruleCreator<typeof defaultOptions, MessageIds>({
       const shouldBeFinnish = hasFinnish
         ? () => {}
         : () =>
-            context.report({
-              loc: getLoc(tsNode),
-              messageId: "shouldBeFinnish",
-            });
+          context.report({
+            loc: getLoc(tsNode),
+            messageId: "shouldBeFinnish",
+          });
       const shouldNotBeFinnish = hasFinnish
         ? () =>
-            context.report({
-              loc: getLoc(tsNode),
-              messageId: "shouldNotBeFinnish",
-            })
+          context.report({
+            loc: getLoc(tsNode),
+            messageId: "shouldNotBeFinnish",
+          })
         : () => {};
       if (
-        couldBeObservable(typeNode || nameNode) ||
-        couldReturnObservable(typeNode || nameNode)
+        couldBeObservable(typeNode ?? nameNode) ||
+        couldReturnObservable(typeNode ?? nameNode)
       ) {
         for (const name of names) {
           const { regExp, validate } = name;
@@ -141,8 +141,8 @@ const rule = ruleCreator<typeof defaultOptions, MessageIds>({
         for (const type of types) {
           const { regExp, validate } = type;
           if (
-            (couldBeType(typeNode || nameNode, regExp) ||
-              couldReturnType(typeNode || nameNode, regExp)) &&
+            (couldBeType(typeNode ?? nameNode, regExp) ||
+              couldReturnType(typeNode ?? nameNode, regExp)) &&
             !validate
           ) {
             shouldNotBeFinnish();
