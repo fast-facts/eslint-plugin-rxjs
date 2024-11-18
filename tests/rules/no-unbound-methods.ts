@@ -3,7 +3,7 @@
  * can be found in the LICENSE file at https://github.com/cartant/eslint-plugin-rxjs
  */
 
-import { TSESLint as eslint } from "@typescript-eslint/utils";
+import { InvalidTestCase, ValidTestCase } from "@typescript-eslint/rule-tester";
 import { stripIndent } from "common-tags";
 import { fromFixture } from "../../source/etc/from-fixture";
 import * as rule from "../../source/rules/no-unbound-methods";
@@ -11,9 +11,9 @@ import { ruleTester } from "../utils";
 
 interface Tests {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  valid: (string | eslint.ValidTestCase<any>)[];
+  valid: (string | ValidTestCase<any>)[];
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  invalid: eslint.InvalidTestCase<any, any>[];
+  invalid: InvalidTestCase<any, any>[];
 }
 
 const arrowTests: Tests = {
