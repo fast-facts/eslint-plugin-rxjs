@@ -24,9 +24,6 @@ updates:
         patterns:
           - '*typescript*'
           - '*eslint*'
-      chai:
-        patterns:
-          - '*chai*'
       mocha:
         patterns:
           - '*mocha*'
